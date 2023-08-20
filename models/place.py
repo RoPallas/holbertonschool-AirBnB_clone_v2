@@ -6,6 +6,7 @@ from sqlalchemy.orm import relationship
 import os
 from models.user import User
 
+
 place_amenity = Table('place_amenity', Base.metadata,
                       Column('place_id', String(60),
                              ForeignKey('places.id'),
@@ -20,6 +21,7 @@ class Place(BaseModel, Base):
     """ A place to stay """
 
     __tablename__ = 'places'
+
     city_id = Column(String(60), ForeignKey('cities.id'), nullable=False)
     user_id = Column(String(60), ForeignKey('users.id'), nullable=False)
     name = Column(String(128), nullable=False)
@@ -38,7 +40,6 @@ class Place(BaseModel, Base):
         amenities = relationship("Amenity", secondary="place_amenity",
                                  backref="place_amenities",
                                  viewonly=False)
-
     else:
         @property
         def reviews(self):
@@ -49,7 +50,7 @@ class Place(BaseModel, Base):
                 if splited_key[0] == 'Review':
                     reviews.append(value)
             filtered_reviews = list(
-                filter(lambda x: x.place_id == self.id), reviews)
+                filter(lambda x: x.place_id == self.id, reviews))
             return filtered_reviews
 
         @property
@@ -61,7 +62,7 @@ class Place(BaseModel, Base):
                 if splited_key[0] == 'Amenity':
                     amenities.append(value)
             filtered_amenities = list(
-                filter(lambda x: x.place_id == self.id), amenities)
+                filter(lambda x: x.place_id == self.id, amenities))
             return filtered_amenities
 
         @amenities.setter
