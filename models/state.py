@@ -18,7 +18,7 @@ class State(BaseModel, Base):
         def cities(self):
             from models import storage
             cities = []
-            for key, value in storage.__objects.items():
+            for key, value in storage._FileStorage__objects.items():
                 splited_key = key.split('.')
                 if splited_key[0] == 'City':
                     cities.append(value)
