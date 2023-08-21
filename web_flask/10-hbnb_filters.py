@@ -30,6 +30,20 @@ def if_state_id(id):
     return render_template('9-states.html',
                            state_obj=state_obj)
 
+@app.route("/cities_by_states", strict_slashes=False)
+def cities_by_states():
+    """display a HTML page, with the list of City objects"""
+    return render_template('8-cities_by_states.html',
+                           states=storage.all("State").values())
+
+
+@app.route('/hbnb_filters', strict_slashes=False)
+def hbnb_filters():
+    """display a HTML page"""
+    return render_template('10-hbnb_filters.html',
+                           states=storage.all("State").values(),
+                           amenities=storage.all("Amenity").values())
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
